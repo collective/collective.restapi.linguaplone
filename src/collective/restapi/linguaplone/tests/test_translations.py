@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from base64 import b64encode
 from collective.restapi.linguaplone.testing import COLLECTIVE_RESTAPI_LINGUAPLONE_FUNCTIONAL_TESTING  # noqa
 from collective.restapi.linguaplone.testing import COLLECTIVE_RESTAPI_LINGUAPLONE_INTEGRATION_TESTING  # noqa
 from plone.app.testing import login
@@ -6,6 +7,8 @@ from plone.app.testing import SITE_OWNER_NAME
 from plone.app.testing import SITE_OWNER_PASSWORD
 from unittest import TestCase
 from zope.component import getMultiAdapter
+from zope.event import notify
+from ZPublisher.pubevents import PubStart
 
 import requests
 import transaction
@@ -64,7 +67,176 @@ class TestLPTranslationInfo(TestCase):
         self.assertEqual(self.es_content.Language(), tinfo_es['language'])
 
 
-class TestLPLinkContentsAsTranslations(TestCase):
+class TestLinkContents(TestCase):
+    layer = COLLECTIVE_RESTAPI_LINGUAPLONE_INTEGRATION_TESTING
+
+    def setUp(self):
+        self.portal = self.layer['portal']
+        self.request = self.layer['request']
+        # self.portal.portal_languages.addSupportedLanguage('en')
+        # self.portal.portal_languages.addSupportedLanguage('es')
+        #  Setup the language root folders
+        login(self.portal, SITE_OWNER_NAME)
+        lsf = getMultiAdapter(
+            (self.portal, self.request),
+            name='language-setup-folders'
+        )
+        lsf()
+
+        en_id = self.portal.en.invokeFactory(
+            id='test-document',
+            type_name='Document',
+            title='Test document'
+        )
+        self.en_content = self.portal.en.get(en_id)
+        es_id = self.portal.es.invokeFactory(
+            id='test-document',
+            type_name='Document',
+            title='Test document'
+        )
+        self.es_content = self.portal.es.get(es_id)
+        self.en_content.addTranslationReference(self.es_content)
+
+        untranslated_en_id = self.portal.en.invokeFactory(
+            id='untranslated-test-document',
+            type_name='Document',
+            title='Test document'
+        )
+        self.untranslated_en_content = self.portal.en.get(untranslated_en_id)
+        untranslated_es_id = self.portal.es.invokeFactory(
+            id='untranslated-test-document',
+            type_name='Document',
+            title='Test document'
+        )
+        self.untranslated_es_content = self.portal.es.get(untranslated_es_id)
+
+    def traverse(self, path='/plone', accept='application/json',
+                 method='POST'):
+        request = self.layer['request']
+        request.environ['PATH_INFO'] = path
+        request.environ['PATH_TRANSLATED'] = path
+        request.environ['HTTP_ACCEPT'] = accept
+        request.environ['REQUEST_METHOD'] = method
+        request._auth = 'Basic %s' % b64encode(
+            '%s:%s' % (SITE_OWNER_NAME, SITE_OWNER_PASSWORD))
+        notify(PubStart(request))
+        return request.traverse(path)
+
+    def test_translation_link_without_id_gives_400(self):
+        service = self.traverse('/plone/en/test-document/@translations')
+        res = service.reply()
+        self.assertEqual(400, self.request.response.getStatus())
+        self.assertEqual(
+            'Missing content id to link to', res['error']['message'])
+
+    def test_translation_link_with_invalid_id_gives_400(self):
+        self.request['BODY'] = '{"id": "http://server.com/unexisting-id"}'
+        service = self.traverse('/plone/en/test-document/@translations')
+        res = service.reply()
+        self.assertEqual(400, self.request.response.getStatus())
+        self.assertEqual(
+            'Content does not exist', res['error']['message'])
+
+    def test_translation_link_already_translated(self):
+        self.request['BODY'] = '{"id": "http://nohost/plone/es/test-document"}'
+        service = self.traverse('/plone/en/test-document/@translations')
+        res = service.reply()
+        self.assertEqual(400, self.request.response.getStatus())
+        self.assertEqual(
+            'Already translated into language es', res['error']['message'])
+
+    def test_translation_linking_succeeds(self):
+        self.request['BODY'] = '{"id": "http://nohost/plone/es/untranslated-test-document"}' # noqa
+        service = self.traverse(
+            '/plone/en/untranslated-test-document/@translations')
+        service.reply()
+        self.assertEqual(201, self.request.response.getStatus())
+
+
+class TestUnLinkContents(TestCase):
+    layer = COLLECTIVE_RESTAPI_LINGUAPLONE_INTEGRATION_TESTING
+
+    def setUp(self):
+        self.portal = self.layer['portal']
+        self.request = self.layer['request']
+        # self.portal.portal_languages.addSupportedLanguage('en')
+        # self.portal.portal_languages.addSupportedLanguage('es')
+        #  Setup the language root folders
+        login(self.portal, SITE_OWNER_NAME)
+        lsf = getMultiAdapter(
+            (self.portal, self.request),
+            name='language-setup-folders'
+        )
+        lsf()
+
+        en_id = self.portal.en.invokeFactory(
+            id='test-document',
+            type_name='Document',
+            title='Test document'
+        )
+        self.en_content = self.portal.en.get(en_id)
+        es_id = self.portal.es.invokeFactory(
+            id='test-document',
+            type_name='Document',
+            title='Test document'
+        )
+        self.es_content = self.portal.es.get(es_id)
+        self.en_content.addTranslationReference(self.es_content)
+
+        untranslated_en_id = self.portal.en.invokeFactory(
+            id='untranslated-test-document',
+            type_name='Document',
+            title='Test document'
+        )
+        self.untranslated_en_content = self.portal.en.get(untranslated_en_id)
+        untranslated_es_id = self.portal.es.invokeFactory(
+            id='untranslated-test-document',
+            type_name='Document',
+            title='Test document'
+        )
+        self.untranslated_es_content = self.portal.es.get(untranslated_es_id)
+
+    def traverse(self, path='/plone', accept='application/json',
+                 method='POST'):
+        request = self.layer['request']
+        request.environ['PATH_INFO'] = path
+        request.environ['PATH_TRANSLATED'] = path
+        request.environ['HTTP_ACCEPT'] = accept
+        request.environ['REQUEST_METHOD'] = method
+        request._auth = 'Basic %s' % b64encode(
+            '%s:%s' % (SITE_OWNER_NAME, SITE_OWNER_PASSWORD))
+        notify(PubStart(request))
+        return request.traverse(path)
+
+
+    def test_translation_unlink_invalid_language_returns_400(self):
+        self.request['BODY'] = '{"language": "fr"}'
+        service = self.traverse(
+            '/plone/en/test-document/@translations', method='DELETE')
+        res = service.reply()
+        self.assertEqual(400, self.request.response.getStatus())
+        self.assertEqual(
+            'This object is not translated into fr', res['error']['message'])
+
+    def test_translation_unlink_without_language_returns_400(self):
+        service = self.traverse(
+            '/plone/en/test-document/@translations', method='DELETE')
+        res = service.reply()
+        self.assertEqual(400, self.request.response.getStatus())
+        self.assertEqual(
+            'You need to provide the language to unlink',
+            res['error']['message']
+        )
+
+    def test_translation_unlinking_succeeds(self):
+        self.request['BODY'] = '{"language": "es"}'
+        service = self.traverse(
+            '/plone/en/test-document/@translations', method='DELETE')
+        res = service.reply()
+        self.assertEqual(204, self.request.response.getStatus())
+
+
+class TestLinkContentsFunctional(TestCase):
     layer = COLLECTIVE_RESTAPI_LINGUAPLONE_FUNCTIONAL_TESTING
 
     def setUp(self):
@@ -131,7 +303,7 @@ class TestLPLinkContentsAsTranslations(TestCase):
         self.assertEqual(400, response.status_code)
 
 
-class TestLPUnLinkContentTranslationsTestCase(TestCase):
+class TestUnLinkContentsFunctional(TestCase):
     layer = COLLECTIVE_RESTAPI_LINGUAPLONE_FUNCTIONAL_TESTING
 
     def setUp(self):
