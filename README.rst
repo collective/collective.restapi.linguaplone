@@ -9,6 +9,9 @@
   :target: https://landscape.io/github/collective/collective.restapi.linguaplone/master
   :alt: Code Health
 
+.. image:: https://readthedocs.org/projects/collectiverestapilinguaplone/badge/?version=latest
+  :target: https://collectiverestapilinguaplone.readthedocs.io/en/latest/?badge=latest
+
 
 ==============================
 collective.restapi.linguaplone
