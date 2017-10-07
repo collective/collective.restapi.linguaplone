@@ -6,20 +6,13 @@
 Welcome to collective.restapi.linguaplone's documentation!
 ==========================================================
 
-Contents:
+.. include:: ../../README.rst
+
+
+Contents
+--------
 
 .. toctree::
    :maxdepth: 2
 
    translations
-
-.. include:: ../../README.rst
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
-

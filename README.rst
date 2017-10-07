@@ -23,7 +23,7 @@ An add-on providing plone.restapi endpoint for translations handled using Lingua
 Documentation
 -------------
 
-Full documentation for end users can be found in the "docs" folder, and is also available online at http://docs.plone.org/foo/bar
+Full documentation for end users can be found in the "docs" folder, and is also available online at https://collectiverestapilinguaplone.readthedocs.io
 
 
 
@@ -48,7 +48,7 @@ Contribute
 
 - Issue Tracker: https://github.com/collective/collective.restapi.linguaplone/issues
 - Source Code: https://github.com/collective/collective.restapi.linguaplone
-- Documentation: https://docs.plone.org/foo/bar
+- Documentation: https://collectiverestapilinguaplone.readthedocs.io
 
 
 License
