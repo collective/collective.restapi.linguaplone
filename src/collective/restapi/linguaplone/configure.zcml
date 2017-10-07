@@ -1,37 +1,31 @@
 <configure
     xmlns="http://namespaces.zope.org/zope"
-    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
-    xmlns:i18n="http://namespaces.zope.org/i18n"
-    i18n_domain="collective.restapi.linguaplone">
-
-  <i18n:registerTranslations directory="locales" />
+    xmlns:plone="http://namespaces.plone.org/plone">
 
   <includeDependencies package="." />
 
-  <include package=".browser" />
+  <plone:service
+    method="GET"
+    name="@translations"
+    for="Products.CMFCore.interfaces.IContentish"
+    factory=".translations.TranslationInfo"
+    permission="zope2.View"
+    />
 
+  <plone:service
+    method="POST"
+    name="@translations"
+    for="Products.CMFCore.interfaces.IContentish"
+    factory=".translations.LinkTranslations"
+    permission="cmf.ModifyPortalContent"
+  />
 
-  <genericsetup:registerProfile
-      name="default"
-      title="collective.restapi.linguaplone"
-      directory="profiles/default"
-      description="Installs the collective.restapi.linguaplone add-on."
-      provides="Products.GenericSetup.interfaces.EXTENSION"
-      post_handler=".setuphandlers.post_install"
-      />
-
-  <genericsetup:registerProfile
-      name="uninstall"
-      title="collective.restapi.linguaplone (uninstall)"
-      directory="profiles/uninstall"
-      description="Uninstalls the collective.restapi.linguaplone add-on."
-      provides="Products.GenericSetup.interfaces.EXTENSION"
-      post_handler=".setuphandlers.uninstall"
-      />
-
-
-  <utility
-      factory=".setuphandlers.HiddenProfiles"
-      name="collective.restapi.linguaplone-hiddenprofiles" />
+  <plone:service
+    method="DELETE"
+    name="@translations"
+    for="Products.CMFCore.interfaces.IContentish"
+    factory=".translations.UnlinkTranslations"
+    permission="cmf.ModifyPortalContent"
+  />
 
 </configure>
