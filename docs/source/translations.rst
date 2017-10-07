@@ -52,9 +52,5 @@ endpoint of the content item and provide the language code you want to unlink.:
 .. literalinclude:: _json/translations_delete.resp
    :language: http
 
-.. note::
-    The `@translations` endpoint works also when using `Products.LinguaPlone`_
-    in Plone 4.3.x
-
 
 .. _`Products.LinguaPlone`: https://pypi.python.org/pypi/Products.LinguaPlone.
