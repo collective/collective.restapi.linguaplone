@@ -27,7 +27,7 @@ setup(
         "Operating System :: OS Independent",
         "License :: OSI Approved :: GNU General Public License v2 (GPLv2)",
     ],
-    keywords='Python Plone',
+    keywords='plone rest restful hypermedia api json',
     author='Mikel Larreategi',
     author_email='mlarreategi@codesyntax.com',
     url='https://pypi.python.org/pypi/collective.restapi.linguaplone',
@@ -38,10 +38,10 @@ setup(
     include_package_data=True,
     zip_safe=False,
     install_requires=[
-        'plone.api',
-        'Products.GenericSetup>=1.8.2',
+        'plone.restapi',
+        'Products.LinguaPlone',
         'setuptools',
-        'z3c.jbot',
+        'Plone <= 4.99',
     ],
     extras_require={
         'test': [
@@ -52,6 +52,8 @@ setup(
             'plone.testing>=5.0.0',
             'plone.app.contenttypes',
             'plone.app.robotframework[debug]',
+            'plone.api',
+            'requests',
         ],
     },
     entry_points="""
