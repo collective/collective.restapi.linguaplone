@@ -17,7 +17,7 @@
 collective.restapi.linguaplone
 ==============================
 
-An add-on providing plone.restapi endpoint for translations handled using LinguaPlone_
+An add-on providing plone.restapi endpoint for translations handled using `LinguaPlone`_
 
 
 Documentation
@@ -56,4 +56,4 @@ License
 
 The project is licensed under the GPLv2.
 
-.. LinguaPlone: https://pypi.python.org/pypi/Products.LinguaPlone
+.. _`LinguaPlone`: https://pypi.python.org/pypi/Products.LinguaPlone
