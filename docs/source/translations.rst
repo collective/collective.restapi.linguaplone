@@ -1,6 +1,11 @@
-Translations
-============
+LinguaPlone Translations
+========================
 
+.. note::
+    This addon will only work with `Products.LinguaPlone`_ in Plone 4.
+    You can install `collective.restapi.pam`_ if you want to get similar
+    features in Plone 4 using `plone.app.multilingual`_ versions 1.x and 2.x
+    and use plain `plone.restapi`_ in Plone 5.
 
 Using this addon you can get information about the translations of a content
 object handled using `Products.LinguaPlone`_. To achieve that it provides a
@@ -54,3 +59,6 @@ endpoint of the content item and provide the language code you want to unlink.:
 
 
 .. _`Products.LinguaPlone`: https://pypi.python.org/pypi/Products.LinguaPlone.
+.. _`collective.restapi.pam`: https://pypi.python.org/pypi/collective.restapi.pam
+.. _`plone.app.multilingual`: https://pypi.python.org/pypi/plone.app.multilingual
+.. _`plone.restapi`: https://pypi.python.org/pypi/plone.restapi
