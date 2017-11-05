@@ -5,7 +5,8 @@ Changelog
 1.0b2 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Doc formatting fixes
+  [erral]
 
 
 1.0b1 (2017-11-05)
