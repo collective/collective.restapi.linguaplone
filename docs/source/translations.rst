@@ -58,7 +58,7 @@ endpoint of the content item and provide the language code you want to unlink.:
    :language: http
 
 
-.. _`Products.LinguaPlone`: https://pypi.python.org/pypi/Products.LinguaPlone.
+.. _`Products.LinguaPlone`: https://pypi.python.org/pypi/Products.LinguaPlone
 .. _`collective.restapi.pam`: https://pypi.python.org/pypi/collective.restapi.pam
 .. _`plone.app.multilingual`: https://pypi.python.org/pypi/plone.app.multilingual
 .. _`plone.restapi`: https://pypi.python.org/pypi/plone.restapi
