@@ -5,7 +5,8 @@ Changelog
 1.0b3 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fix testing setup.
+  [erral]
 
 
 1.0b2 (2017-11-05)

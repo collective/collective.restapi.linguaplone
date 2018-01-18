@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from base64 import b64encode
 from collective.restapi.linguaplone.testing import COLLECTIVE_RESTAPI_LINGUAPLONE_FUNCTIONAL_TESTING  # noqa
-from collective.restapi.linguaplone.testing import COLLECTIVE_RESTAPI_LINGUAPLONE_INTEGRATION_TESTING  # noqa
 from DateTime import DateTime
 from datetime import datetime
 from datetime import timedelta
