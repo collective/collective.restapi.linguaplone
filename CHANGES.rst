@@ -8,6 +8,9 @@ Changelog
 - Fix testing setup.
   [erral]
 
+- Change classifiers.
+  [erral]
+
 
 1.0b2 (2017-11-05)
 ------------------
