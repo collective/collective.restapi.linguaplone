@@ -2,7 +2,7 @@ Changelog
 =========
 
 
-1.0b3 (unreleased)
+1.0.0 (2018-01-18)
 ------------------
 
 - Fix testing setup.
