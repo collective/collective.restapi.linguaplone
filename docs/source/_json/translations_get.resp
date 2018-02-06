@@ -3,7 +3,7 @@ Content-Type: application/json
 
 {
   "@id": "http://localhost:55001/plone/en/test-document/@translations", 
-  "translations": [
+  "items": [
     {
       "@id": "http://localhost:55001/plone/es/test-document", 
       "language": "es"

@@ -51,8 +51,8 @@ class TestLPTranslationInfo(TestCase):
             name=u'GET_application_json_@translations')
 
         info = tinfo.reply()
-        self.assertIn('translations', info)
-        self.assertEqual(1, len(info['translations']))
+        self.assertIn('items', info)
+        self.assertEqual(1, len(info['items']))
 
     def test_correct_translation_information(self):
         tinfo = getMultiAdapter(
@@ -60,7 +60,7 @@ class TestLPTranslationInfo(TestCase):
             name=u'GET_application_json_@translations')
 
         info = tinfo.reply()
-        tinfo_es = info['translations'][0]
+        tinfo_es = info['items'][0]
         self.assertEqual(
             self.es_content.absolute_url(),
             tinfo_es['@id'])

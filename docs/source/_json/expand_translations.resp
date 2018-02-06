@@ -11,7 +11,7 @@ Content-Type: application/json
     }, 
     "translations": {
       "@id": "http://localhost:55001/plone/en/test-document/@translations", 
-      "translations": [
+      "items": [
         {
           "@id": "http://localhost:55001/plone/es/test-document", 
           "language": "es"
@@ -24,7 +24,7 @@ Content-Type: application/json
   }, 
   "@id": "http://localhost:55001/plone/en/test-document", 
   "@type": "Document", 
-  "UID": "9f7fa3587f494172b7c7c77b59d5c4e1", 
+  "UID": "28ca32f019ff4f7bb177f73b4f60a270", 
   "allowDiscussion": false, 
   "contributors": [], 
   "creation_date": "2016-10-21T21:00:00+02:00", 

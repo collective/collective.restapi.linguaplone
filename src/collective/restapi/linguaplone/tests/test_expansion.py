@@ -82,5 +82,5 @@ class TestExpansionFunctional(unittest.TestCase):
         }
         self.assertIn(
             translation_dict,
-            response.json()['@components']['translations']['translations']
+            response.json()['@components']['translations']['items']
         )
