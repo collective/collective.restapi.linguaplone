@@ -39,7 +39,7 @@ class Translations(object):
                 })
 
 
-        result['translations']['translations'] = translations
+        result['translations']['items'] = translations
         return result
 
 
