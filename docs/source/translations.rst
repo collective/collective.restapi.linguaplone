@@ -59,7 +59,7 @@ endpoint of the content item and provide the language code you want to unlink.:
 
 
 Expansion
-=========
+---------
 
 This endpoint uses the `expansion`_ mechanism of `plone.restapi`_ which allows to get additional
 information about a content item in one query, avoiding unnecesary requests.
