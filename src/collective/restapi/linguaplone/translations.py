@@ -23,8 +23,7 @@ class Translations(object):
     def __call__(self, expand=False):
         result = {
             'translations': {
-                '@id': self.context.absolute_url(),
-                'language': self.context.Language(),
+                '@id': '{}/@translations'.format(self.context.absolute_url()),
             },
         }
         if not expand:
