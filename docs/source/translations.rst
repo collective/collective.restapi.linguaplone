@@ -1,3 +1,5 @@
+.. _translations:
+
 LinguaPlone Translations
 ========================
 
