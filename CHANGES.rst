@@ -2,7 +2,7 @@ Changelog
 =========
 
 
-1.0.1 (unreleased)
+2.0.0 (unreleased)
 ------------------
 
 - Breaking: rename the results attributes to be 'items'
