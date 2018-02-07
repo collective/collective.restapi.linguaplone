@@ -18,7 +18,7 @@ Content-Type: application/json
   }, 
   "@id": "http://localhost:55001/plone/en/test-document", 
   "@type": "Document", 
-  "UID": "a84bf480f30143f2bab158d6881e4645", 
+  "UID": "SomeUUID000000000000000000000004", 
   "allowDiscussion": false, 
   "contributors": [], 
   "creation_date": "2016-10-21T21:00:00+02:00", 
