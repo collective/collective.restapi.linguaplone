@@ -52,6 +52,7 @@ class CollectiveRestapiLinguaploneLayer(PloneSandboxLayer):
 
         portal.portal_languages.addSupportedLanguage('en')
         portal.portal_languages.addSupportedLanguage('es')
+        portal.portal_workflow.setDefaultChain("simple_publication_workflow")
 
 
 COLLECTIVE_RESTAPI_LINGUAPLONE_FIXTURE = CollectiveRestapiLinguaploneLayer()
