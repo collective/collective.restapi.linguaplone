@@ -24,24 +24,23 @@ class Translations(object):
 
     def __call__(self, expand=False):
         result = {
-            'translations': {
-                '@id': '{}/@translations'.format(self.context.absolute_url()),
-            },
+            "translations": {
+                "@id": "{}/@translations".format(self.context.absolute_url())
+            }
         }
         if not expand:
             return result
 
         translations = []
         for language, translation in self.context.getTranslations(
-                review_state=False).items():
+            review_state=False
+        ).items():
             if language != self.context.Language():
-                translations.append({
-                    '@id': translation.absolute_url(),
-                    'language': language,
-                })
+                translations.append(
+                    {"@id": translation.absolute_url(), "language": language}
+                )
 
-
-        result['translations']['items'] = translations
+        result["translations"]["items"] = translations
         return result
 
 
@@ -51,7 +50,7 @@ class TranslationInfo(Service):
 
     def reply(self):
         translations = Translations(self.context, self.request)
-        return translations(expand=True)['translations']
+        return translations(expand=True)["translations"]
 
 
 class LinkTranslations(Service):
@@ -68,37 +67,37 @@ class LinkTranslations(Service):
 
     def reply(self):
         # Disable CSRF protection
-        if 'IDisableCSRFProtection' in dir(plone.protect.interfaces):
-            alsoProvides(self.request,
-                         plone.protect.interfaces.IDisableCSRFProtection)
+        if "IDisableCSRFProtection" in dir(plone.protect.interfaces):
+            alsoProvides(self.request, plone.protect.interfaces.IDisableCSRFProtection)
 
         data = json_body(self.request)
-        id_ = data.get('id', None)
+        id_ = data.get("id", None)
         if id_ is None:
             self.request.response.setStatus(400)
-            return dict(error=dict(
-                type='BadRequest',
-                message='Missing content id to link to'))
+            return dict(
+                error=dict(type="BadRequest", message="Missing content id to link to")
+            )
 
         target = self.get_object(id_)
         if target is None:
             self.request.response.setStatus(400)
-            return dict(error=dict(
-                type='BadRequest',
-                message='Content does not exist'))
+            return dict(error=dict(type="BadRequest", message="Content does not exist"))
 
         target_language = target.Language()
         if self.context.hasTranslation(target_language):
             self.request.response.setStatus(400)
-            return dict(error=dict(
-                type='BadRequest',
-                message='Already translated into language {}'.format(
-                    target_language)))
+            return dict(
+                error=dict(
+                    type="BadRequest",
+                    message="Already translated into language {}".format(
+                        target_language
+                    ),
+                )
+            )
 
         self.context.addTranslationReference(target)
         self.request.response.setStatus(201)
-        self.request.response.setHeader(
-            'Location', self.context.absolute_url())
+        self.request.response.setHeader("Location", self.context.absolute_url())
         return {}
 
     def get_object(self, key):
@@ -127,24 +126,28 @@ class UnlinkTranslations(Service):
 
     def reply(self):
         # Disable CSRF protection
-        if 'IDisableCSRFProtection' in dir(plone.protect.interfaces):
-            alsoProvides(self.request,
-                         plone.protect.interfaces.IDisableCSRFProtection)
+        if "IDisableCSRFProtection" in dir(plone.protect.interfaces):
+            alsoProvides(self.request, plone.protect.interfaces.IDisableCSRFProtection)
 
         data = json_body(self.request)
-        language = data.get('language', None)
+        language = data.get("language", None)
         if language is None:
             self.request.response.setStatus(400)
-            return dict(error=dict(
-                type='BadRequest',
-                message='You need to provide the language to unlink'))
+            return dict(
+                error=dict(
+                    type="BadRequest",
+                    message="You need to provide the language to unlink",
+                )
+            )
 
         if not self.context.hasTranslation(language):
             self.request.response.setStatus(400)
-            return dict(error=dict(
-                type='BadRequest',
-                message='This object is not translated into {}'.format(
-                    language)))
+            return dict(
+                error=dict(
+                    type="BadRequest",
+                    message="This object is not translated into {}".format(language),
+                )
+            )
 
         self.context.removeTranslation(language)
         self.request.response.setStatus(204)
