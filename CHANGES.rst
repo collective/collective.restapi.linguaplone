@@ -2,7 +2,13 @@ Changelog
 =========
 
 
-2.0.0 (unreleased)
+2.0.1 (unreleased)
+------------------
+
+- Allow using object paths and UIDs when linking translations.
+  [erral]
+
+2.0.0 (2018-04-27)
 ------------------
 
 - Breaking: rename the results attributes to be 'items'

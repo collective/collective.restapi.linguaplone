@@ -3,6 +3,9 @@ Content-Type: application/json
 
 {
   "@components": {
+    "actions": {
+      "@id": "http://localhost:55001/plone/en/test-document/@actions"
+    }, 
     "breadcrumbs": {
       "@id": "http://localhost:55001/plone/en/test-document/@breadcrumbs"
     }, 
@@ -21,7 +24,7 @@ Content-Type: application/json
   "UID": "SomeUUID000000000000000000000004", 
   "allowDiscussion": false, 
   "contributors": [], 
-  "creation_date": "2016-10-21T21:00:00+02:00", 
+  "creation_date": "2016-10-21T19:00:00+00:00", 
   "creators": [
     "test_user_1_"
   ], 
@@ -37,7 +40,7 @@ Content-Type: application/json
   "language": "en", 
   "layout": "document_view", 
   "location": "", 
-  "modification_date": "2016-10-21T21:00:00+02:00", 
+  "modification_date": "2016-10-21T19:00:00+00:00", 
   "parent": {
     "@id": "http://localhost:55001/plone/en", 
     "@type": "Folder", 

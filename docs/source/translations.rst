@@ -35,6 +35,26 @@ The API will return a `201 Created` response if the linking was successful.
    :language: http
 
 
+We can also use the object's path to link the translation instead of the full URL:
+
+..  http:example:: curl httpie python-requests
+    :request: _json/translations_post_by_id.req
+
+.. literalinclude:: _json/translations_post_by_id.resp
+   :language: http
+
+
+We can also use the object's UID to link the translation:
+
+..  http:example:: curl httpie python-requests
+    :request: _json/translations_post_by_uid.req
+
+.. literalinclude:: _json/translations_post_by_id.resp
+   :language: http
+
+
+
+
 After linking the contents we can get the list of the translations of that
 content item by issuing a ``GET`` request on the `@translations` endpoint of
 that content item.:
